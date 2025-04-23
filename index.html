@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ungkapan Cinta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #game, #question, #finalQuestion {
+            display: none;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        #noButton {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Mini Game Ungkapan Cinta</h1>
+    <div id="game">
+        <h2>Tebak Angka (1-10)</h2>
+        <input type="number" id="guess" min="1" max="10">
+        <button onclick="checkGuess()">Kirim</button>
+        <p id="message"></p>
+    </div>
+
+    <div id="question">
+        <h2>Aku boleh tanya gak?</h2>
+        <button id="yesButton" onclick="showFinalQuestion()">Iya</button>
+        <button id="noButton" onclick="moveNoButton()">Tidak</button>
+    </div>
+
+    <div id="finalQuestion">
+        <h2>Aku mau tanya sekali lagi ke zaza, tapi sebelumnya maaf ya kalo kesannya aku memaksa, tapi sejujurnya aku cuman memastikan lagi. Oke lanjut, kira-kira boleh gak aku jadi pacar zaza?</h2>
+        <button onclick="showResult('ya')">Ya</button>
+        <button onclick="showResult('tidak')">Tidak</button>
+    </div>
+
+    <button id="startButton" onclick="startGame()">Mulai Game</button>
+
+    <script>
+        let attempts = 0;
+        const correctAnswer = 7;
+
+        function startGame() {
+            document.getElementById('startButton').style.display = 'none';
+            document.getElementById('game').style.display = 'block';
+            document.getElementById('message').innerText = '';
+            attempts = 0;
+        }
+
+        function checkGuess() {
+            const guess = parseInt(document.getElementById('guess').value);
+            attempts++;
+                      if (guess === correctAnswer) {
+                document.getElementById('message').innerText = "Terimakasih sudah menekan angka 7 karena kamu adalah tujuanku";
+                showQuestion();
+            } else if (attempts < 3) {
+                if (guess < 5) {
+                    document.getElementById('message').innerText = "Coba angka lain yang lebih dekat dengan angka 5.";
+                } else {
+                    document.getElementById('message').innerText = "Coba angka lain.";
+                }
+            } else if (attempts === 3) {
+                document.getElementById('message').innerText = "Kesempatan terakhir! Aku bantu jawabannya itu 7 zaza😉";
+                document.getElementById('guess').value = '';
+            } else {
+                document.getElementById('message').innerText = "Kesempatan habis! Jawaban yang benar adalah 7.";
+                showQuestion();
+            }
+        }
+
+        function showQuestion() {
+            document.getElementById('game').style.display = 'none';
+            document.getElementById('question').style.display = 'block';
+        }
+
+        function moveNoButton() {
+            const noButton = document.getElementById('noButton');
+            const randomX = Math.random() * 200;
+            const randomY = Math.random() * 100;
+            noButton.style.transform = `translate(${randomX}px, ${randomY}px)`;
+              }
+      function showFinalQuestion() {
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('finalQuestion').style.display = 'block';
+        }
+
+        function showResult(answer) {
+            if (answer === 'ya') {
+                alert("Yay! Semoga kita bisa bersama!");
+            } else {
+                alert("Oh, tidak apa-apa. Semoga kita tetap berteman!");
+            }
+        }
+    </script>
+
+</body>
+</html>
+      
